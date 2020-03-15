@@ -1,0 +1,38 @@
+SW-03
+
+ENABLE
+CONFIGURE TERMINAL
+hostname SW-03
+ENABLE SECRET Sarturno*Enable 
+ip domain-name sarturno.local
+no ip domain-lookup
+banner motd "ATENCAO! APENAS O DEPARTAMENTO DE TI DA EMPRESA SATURNO LTDA. TEM A AUTORIZACAO PARA ACESSAR ESSE EQUIPAMENTO!"
+crypto key generate rsa general-keys modulus 1024
+username sarturnoti privilege 15 secret batata*00
+service password-encryption
+ip default-gateway 172.16.10.1
+
+line vty 0 15
+password Sarturno*VTY
+transport input ssh
+login local
+exit
+
+line console 0
+password Sarturno*Console
+login local
+exit
+
+interface vlan 1
+ip address 172.16.10.254 255.255.255.0
+no shutdown
+description INTERFACE DE GERENCIAMENTO
+exit
+interface f0/01
+description CONECTADA AO PC-05
+EXIT
+interface f0/02
+description CONECTADA AO PC-06
+exit
+end
+wr
